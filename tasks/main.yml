@@ -1,0 +1,27 @@
+---
+# tasks file for ansible-coreos-kubelet
+- name: Check if kubelet is built-in
+  stat: path={{coreos_kubelet_default_bin}}
+  register: st
+
+- name: Create install dir
+  sudo: yes
+  sudo_user: root
+  file: path={{coreos_kubelet_install_dir}} state=directory mode=0755
+
+- name: Link existing kubelet
+  file: src={{coreos_kubelet_default_bin}} target={{coreos_kubelet_install_dir}}/kubelet state=link force=yes
+  when: st.stat.exists and st.stat.isreg
+
+- name: Install kubelet binary
+  get_url: url={{coreos_kubelet_bin_url}} dest={{coreos_kubelet_install_dir}}/kubelet mode=0755
+  sudo: yes
+
+- name: Install kubelet service
+  template: src=kubelet.service dest={{coreos_kubelet_systemd}}/kubelet.service
+  sudo: yes
+
+- name: Start kubelet
+  sudo: yes
+  sudo_user: root
+  service: name=kubelet.service state=started enabled=yes
