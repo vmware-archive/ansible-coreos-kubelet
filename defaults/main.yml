@@ -3,4 +3,4 @@
 coreos_kubelet_default_bin: /usr/bin/kubelet
 coreos_kubelet_systemd: /etc/systemd/system
 coreos_kubelet_install_dir: /opt/bin
-coreos_kubelet_bin_url: http://pa-dbc1103.eng.vmware.com/hodiquey/kubernetes/1.0.4/linux/amd64/kubelet
+coreos_kubelet_bin_url: https://bintray.com/artifact/download/sigma/kubernetes/1.0.4/kubelet/kubelet
