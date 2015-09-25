@@ -20,6 +20,7 @@
 - name: Install kubelet service
   template: src=kubelet.service dest={{coreos_kubelet_systemd}}/kubelet.service
   sudo: yes
+  notify: reload systemd
 
 - name: Start kubelet
   sudo: yes

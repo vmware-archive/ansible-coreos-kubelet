@@ -1,5 +1,5 @@
 [Unit]
-Description=Kubernetes Kubelet
+Description=Kubelet Service
 Documentation=https://github.com/kubernetes/kubernetes
 
 [Service]
@@ -7,9 +7,22 @@ ExecStartPre=/usr/bin/mkdir -p /etc/kubernetes/manifests
 ExecStart={{coreos_kubelet_install_dir}}/kubelet \
   --allow-privileged=true \
   --config=/etc/kubernetes/manifests \
-  --v=2
-Restart=on-failure
-RestartSec=5
+  --hostname-override={{ansible_default_ipv4.address}} \
+  --cluster_dns={{dns_server}} \
+  --cluster_domain=cluster.local \
+  --cadvisor-port=0 \
+{% if inventory_hostname in groups['kubernetes-masters'] %}
+  --api_servers=http://127.0.0.1:8080 \
+  --register-node={{kube_master_register}}
+{% else %}
+  --api_servers={% for node in groups['kubernetes-masters'] %}https://{{ hostvars[node].ansible_default_ipv4.address }}{% if not loop.last %},{% endif %}{% endfor %} \
+  --register-node=true \
+  --kubeconfig=/etc/kubernetes/worker-kubeconfig.yaml \
+  --tls-cert-file=/etc/kubernetes/ssl/worker.pem \
+  --tls-private-key-file=/etc/kubernetes/ssl/worker-key.pem
+{% endif %}
+Restart=always
+RestartSec=10
 
 [Install]
 WantedBy=multi-user.target

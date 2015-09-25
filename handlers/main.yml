@@ -1,0 +1,15 @@
+---
+- name: reload systemd
+  sudo: true
+  command: systemctl --system daemon-reload
+  notify:
+    - restart daemons
+
+- name: restart daemons
+  command: /bin/true
+  notify:
+    - restart kubelet
+
+- name: restart kubelet
+  sudo: true
+  service: name=kubelet state=restarted
