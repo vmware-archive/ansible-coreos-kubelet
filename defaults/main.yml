@@ -3,7 +3,8 @@
 coreos_kubelet_default_bin: /usr/bin/kubelet
 coreos_kubelet_systemd: /etc/systemd/system
 coreos_kubelet_install_dir: /opt/bin
-coreos_kubelet_bin_url: https://bintray.com/artifact/download/sigma/kubernetes/1.0.4/kubelet/kubelet
+kubernetes_version: "1.0.6"
+coreos_kubelet_bin_url: "https://bintray.com/artifact/download/sigma/kubernetes/{{kubernetes_version}}/kubelet/kubelet"
 kubernetes_service_addresses: "172.21.0.0/16"
 dns_server: "{{ kubernetes_service_addresses|ipaddr('net')|ipaddr(100)|ipaddr('address') }}"
 kube_master_register: false
