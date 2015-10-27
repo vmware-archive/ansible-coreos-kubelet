@@ -10,7 +10,8 @@
   file: path={{coreos_kubelet_install_dir}} state=directory mode=0755
 
 - name: Link existing kubelet
-  file: src={{coreos_kubelet_default_bin}} target={{coreos_kubelet_install_dir}}/kubelet state=link force=yes
+  sudo: yes
+  file: src={{coreos_kubelet_default_bin}} dest={{coreos_kubelet_install_dir}}/kubelet state=link force=yes
   when: st.stat.exists and st.stat.isreg
 
 - name: Install kubelet binary
