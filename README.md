@@ -1,7 +1,7 @@
 CoreOS kubelet
 ==============
 
-current version: 0.0.0
+current version: 0.0.1
 This role installs a working kubelet service into a CoreOS node
 
 Role Variables
