@@ -1,4 +1,10 @@
 ---
+- name: Create env file
+  sudo: yes
+  assemble: src=/etc/env.d dest=/etc/environment mode=0644
+  notify:
+    - reload systemd
+
 - name: reload systemd
   sudo: true
   command: systemctl --system daemon-reload

@@ -3,8 +3,8 @@ Description=Kubelet Service
 Documentation=https://github.com/kubernetes/kubernetes
 
 [Service]
-ExecStartPre=/usr/bin/mkdir -p /etc/kubernetes/manifests
-ExecStart={{coreos_kubelet_install_dir}}/kubelet \
+EnvironmentFile=-/etc/environment
+ExecStart={{coreos_kubelet_install_dir}}/kubelet-wrapper \
   --allow-privileged=true \
   --config=/etc/kubernetes/manifests \
   --hostname-override={{ansible_default_ipv4.address}} \
