@@ -13,7 +13,11 @@ ExecStart={{coreos_kubelet_install_dir}}/kubelet-wrapper \
   --cadvisor-port=0 \
 {% if inventory_hostname in groups['kubernetes-masters'] %}
   --api_servers=http://127.0.0.1:8080 \
-  --register-node={{kube_master_register}}
+  {% if inventory_hostname in groups['kubernetes-minions'] %}
+    --register-node=true
+  {% else %}
+    --register-node={{kube_master_register}}
+  {% endif %}
 {% else %}
   --api_servers={% for node in groups['kubernetes-masters'] %}https://{{ hostvars[node].ansible_default_ipv4.address }}{% if not loop.last %},{% endif %}{% endfor %} \
   --register-node=true \
