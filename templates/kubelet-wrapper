@@ -1,8 +1,10 @@
 #!/bin/bash
 
 BUILTIN_WRAPPER=/usr/lib/coreos/kubelet-wrapper
-if [ -e "$BUILTIN_WRAPPER" ]; then
+CUSTOM_WRAPPER={{coreos_kubelet_install_dir}}/kubelet-wrapper.sh
+
+if [ -e "$CUSTOM_WRAPPER" ]; then
+    exec "$CUSTOM_WRAPPER" "$@"
+elif [ -e "$BUILTIN_WRAPPER" ]; then
     exec "$BUILTIN_WRAPPER" "$@"
 fi
-
-exec {{coreos_kubelet_install_dir}}/kubelet-wrapper.sh "$@"
