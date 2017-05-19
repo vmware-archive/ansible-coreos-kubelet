@@ -18,17 +18,20 @@ mkdir --parents /etc/kubernetes
 mkdir --parents /var/lib/docker
 mkdir --parents /var/lib/kubelet
 mkdir --parents /run/kubelet
+mkdir --parents /var/log/containers
 
 exec /usr/bin/rkt run \
   --volume etc-kubernetes,kind=host,source=/etc/kubernetes \
   --volume etc-ssl-certs,kind=host,source=/usr/share/ca-certificates \
   --volume var-lib-docker,kind=host,source=/var/lib/docker \
   --volume var-lib-kubelet,kind=host,source=/var/lib/kubelet \
+  --volume var-log,kind=host,source=/var/log,readOnly=false \
   --volume run,kind=host,source=/run \
   --mount volume=etc-kubernetes,target=/etc/kubernetes \
   --mount volume=etc-ssl-certs,target=/etc/ssl/certs \
   --mount volume=var-lib-docker,target=/var/lib/docker \
   --mount volume=var-lib-kubelet,target=/var/lib/kubelet \
+  --mount volume=var-log,target=/var/log \
   --mount volume=run,target=/run \
   --trust-keys-from-https \
   $RKT_OPTS \
