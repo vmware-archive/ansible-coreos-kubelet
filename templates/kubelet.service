@@ -16,9 +16,9 @@ ExecStart={{coreos_kubelet_install_dir}}/kubelet-wrapper \
 {% if inventory_hostname in groups['kubernetes-masters'] %}
   --api_servers=http://127.0.0.1:8080 \
   {% if inventory_hostname in groups['kubernetes-minions'] %}
-    --register-schedulable=true \
+  --register-schedulable=true \
   {% else %}
-    --register-schedulable={% if kube_master_register %}true{% else %}false{% endif %} \
+  --register-schedulable={% if kube_master_register %}true{% else %}false{% endif %} \
   {% endif %}
 {% else %}
   --api_servers={% for node in groups['kubernetes-masters'] %}https://{{ hostvars[node].ansible_default_ipv4.address }}{% if not loop.last %},{% endif %}{% endfor %} \
@@ -26,17 +26,10 @@ ExecStart={{coreos_kubelet_install_dir}}/kubelet-wrapper \
   --tls-cert-file=/etc/kubernetes/ssl/worker.pem \
   --tls-private-key-file=/etc/kubernetes/ssl/worker-key.pem \
 {% endif %}
-{% if max_pods is defined %}
-  --max-pods={{max_pods}} \
-{% endif %}
-{% if kube_reserved is defined %}
-  --kube-reserved={{kube_reserved}} \
-{% endif %}
-{% if low_diskspace_threshold_mb is defined %}
-  --low-diskspace-threshold-mb={{low_diskspace_threshold_mb}} \
-{% endif %}
-{% if system_reserved is defined %}
-  --system-reserved={{system_reserved}} \
+{% if kubelet_options is defined %}
+{% for key, value in kubelet_options.iteritems() %}
+  --{{key | lower | replace("_", "-") }}={{value}} \
+{% endfor %}
 {% endif %}
 
 Restart=always
