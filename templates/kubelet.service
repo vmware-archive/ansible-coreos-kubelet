@@ -18,10 +18,10 @@ ExecStart={{coreos_kubelet_install_dir}}/kubelet-wrapper \
   {% if inventory_hostname in groups['kubernetes-minions'] %}
   --register-schedulable=true \
   {% else %}
-  --register-schedulable={% if kube_master_register %}true{% else %}false{% endif %} \
+  --register-schedulable={{ kube_master_register | ternary('true', 'false') }} \
   {% endif %}
 {% else %}
-  --api_servers={% for node in groups['kubernetes-masters'] %}https://{{ hostvars[node].ansible_default_ipv4.address }}{% if not loop.last %},{% endif %}{% endfor %} \
+  --api_servers={{ groups['kubernetes-masters'] | map('extract', hostvars, ['ansible_default_ipv4', 'address']) | list | map('regex_replace', '^(.*)$', 'https://\\1:'~kube_apiserver_secure_port) | list | join(',') }} \
   --kubeconfig=/etc/kubernetes/worker-kubeconfig.yaml \
   --tls-cert-file=/etc/kubernetes/ssl/worker.pem \
   --tls-private-key-file=/etc/kubernetes/ssl/worker-key.pem \
