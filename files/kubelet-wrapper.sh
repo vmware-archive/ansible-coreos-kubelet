@@ -1,18 +1,18 @@
 #!/bin/bash
 # Wrapper for launching kubelet via rkt-fly stage1. 
 #
-# Make sure to set KUBELET_VERSION to an image tag published here:
+# Make sure to set KUBELET_IMAGE_TAG to an image tag published here:
 # https://quay.io/repository/coreos/hyperkube?tab=tags Alternatively,
-# override $KUBELET_ACI to a custom location.
+# override $KUBELET_IMAGE_URL to a custom location.
 
 set -e
 
-if [ -z "${KUBELET_VERSION}" ]; then
-    echo "ERROR: must set KUBELET_VERSION"
+if [ -z "${KUBELET_IMAGE_TAG}" ]; then
+    echo "ERROR: must set KUBELET_IMAGE_TAG"
     exit 1
 fi
 
-KUBELET_ACI="${KUBELET_ACI:-quay.io/coreos/hyperkube}"
+KUBELET_IMAGE_URL="${KUBELET_IMAGE_URL:-quay.io/coreos/hyperkube}"
 
 mkdir --parents /etc/kubernetes
 mkdir --parents /var/lib/docker
@@ -34,6 +34,6 @@ exec /usr/bin/rkt run \
   --mount volume=var-log,target=/var/log \
   --mount volume=run,target=/run \
   --trust-keys-from-https \
-  $RKT_OPTS \
+  $RKT_RUN_ARGS \
   --stage1-from-dir=stage1-fly.aci \
-  ${KUBELET_ACI}:${KUBELET_VERSION} --exec=/kubelet -- "$@"
+  ${KUBELET_IMAGE_URL}:${KUBELET_IMAGE_TAG} --exec=/kubelet -- "$@"
