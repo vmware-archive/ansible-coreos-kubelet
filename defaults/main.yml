@@ -9,6 +9,8 @@ dns_server: "{{ kubernetes_service_addresses|ipaddr('net')|ipaddr(100)|ipaddr('a
 kube_master_register: false
 kube_apiserver_secure_port: 6443
 
+kubelet_extra_rkt_run_args: ""
+
 default_kubelet_options:
   image_gc_high_threshold: 90
   image_gc_low_threshold: 80
