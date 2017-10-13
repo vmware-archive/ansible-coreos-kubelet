@@ -10,7 +10,6 @@ ExecStart={{coreos_kubelet_install_dir}}/kubelet-wrapper \
   --hostname-override={{ansible_default_ipv4.address}} \
   --cluster_dns={{dns_server}} \
   --cluster_domain=cluster.local \
-  --cadvisor-port=0 \
   --volume-plugin-dir=/etc/kubernetes/volumeplugins \
   --register-node=true \
 {% if inventory_hostname in groups['kubernetes-masters'] %}

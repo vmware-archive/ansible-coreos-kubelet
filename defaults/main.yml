@@ -13,6 +13,7 @@ default_kubelet_options:
   image_gc_high_threshold: 90
   image_gc_low_threshold: 80
   minimum_image_ttl_duration: "60m"
+  cadvisor_port: 0
 
 custom_kubelet_options: {}
 
