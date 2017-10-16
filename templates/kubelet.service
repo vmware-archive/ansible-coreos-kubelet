@@ -14,14 +14,8 @@ ExecStart={{coreos_kubelet_install_dir}}/kubelet-wrapper \
   --volume-plugin-dir=/etc/kubernetes/volumeplugins \
   --register-node=true \
 {% if inventory_hostname in groups['kubernetes-masters'] %}
-  --api_servers=http://127.0.0.1:8080 \
-  {% if inventory_hostname in groups['kubernetes-minions'] %}
-  --register-schedulable=true \
-  {% else %}
-  --register-schedulable={{ kube_master_register | ternary('true', 'false') }} \
-  {% endif %}
+  --kubeconfig=/etc/kubernetes/apiserver-kubeconfig.yaml \
 {% else %}
-  --api_servers={{ groups['kubernetes-masters'] | map('extract', hostvars, ['ansible_default_ipv4', 'address']) | list | map('regex_replace', '^(.*)$', 'https://\\1:'~kube_apiserver_secure_port) | list | join(',') }} \
   --kubeconfig=/etc/kubernetes/worker-kubeconfig.yaml \
   --tls-cert-file=/etc/kubernetes/ssl/worker.pem \
   --tls-private-key-file=/etc/kubernetes/ssl/worker-key.pem \
