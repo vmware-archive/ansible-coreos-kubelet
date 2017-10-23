@@ -24,7 +24,7 @@ exec /usr/bin/rkt run \
   --volume etc-kubernetes,kind=host,source=/etc/kubernetes \
   --volume etc-ssl-certs,kind=host,source=/usr/share/ca-certificates \
   --volume var-lib-docker,kind=host,source=/var/lib/docker \
-  --volume var-lib-kubelet,kind=host,source=/var/lib/kubelet \
+  --volume var-lib-kubelet,kind=host,source=/var/lib/kubelet,readOnly=false,recursive=true \
   --volume var-log,kind=host,source=/var/log,readOnly=false \
   --volume run,kind=host,source=/run \
   --mount volume=etc-kubernetes,target=/etc/kubernetes \
