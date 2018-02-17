@@ -18,3 +18,5 @@ default_kubelet_options:
 custom_kubelet_options: {}
 
 kubelet_options: "{{ default_kubelet_options | combine(custom_kubelet_options) }}"
+kube_cloud_provider: "vsphere"
+kube_enable_cloud_provider: False
