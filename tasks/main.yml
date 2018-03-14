@@ -1,31 +1,31 @@
 ---
 # tasks file for ansible-coreos-kubelet
 - name: Create install dir
-  sudo: yes
+  become: yes
   file: path={{coreos_kubelet_install_dir}} state=directory mode=0755
 
 - name: Copy kubelet-wrapper.sh
-  sudo: yes
+  become: yes
   copy: src=kubelet-wrapper.sh dest={{coreos_kubelet_install_dir}}/kubelet-wrapper.sh mode=0755
 
 - name: Install kubelet-wrapper
-  sudo: yes
+  become: yes
   template: src=kubelet-wrapper dest={{coreos_kubelet_install_dir}}/kubelet-wrapper mode=0755
 
 - name: Create env.d dir
-  sudo: yes
+  become: yes
   file: path=/etc/env.d state=directory mode=0755
 
 - name: Create kube env file
-  sudo: yes
+  become: yes
   template: src=kube.env.j2 dest=/etc/env.d/kube.env
   notify: Create env file
 
 - name: Install kubelet service
   template: src=kubelet.service dest={{coreos_kubelet_systemd}}/kubelet.service
-  sudo: yes
+  become: yes
   notify: reload systemd
 
 - name: Start kubelet
-  sudo: yes
+  become: yes
   service: name=kubelet.service state=started enabled=yes

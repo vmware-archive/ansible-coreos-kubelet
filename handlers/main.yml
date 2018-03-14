@@ -1,12 +1,12 @@
 ---
 - name: Create env file
-  sudo: yes
+  become: yes
   assemble: src=/etc/env.d dest=/etc/environment mode=0644
   notify:
     - reload systemd
 
 - name: reload systemd
-  sudo: true
+  become: true
   command: systemctl --system daemon-reload
   notify:
     - restart daemons
@@ -17,5 +17,5 @@
     - restart kubelet
 
 - name: restart kubelet
-  sudo: true
+  become: true
   service: name=kubelet state=restarted
