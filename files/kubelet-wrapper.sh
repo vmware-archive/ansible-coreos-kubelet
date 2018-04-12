@@ -33,6 +33,7 @@ exec /usr/bin/rkt run \
   --mount volume=var-lib-kubelet,target=/var/lib/kubelet \
   --mount volume=var-log,target=/var/log \
   --mount volume=run,target=/run \
+  --hosts-entry=127.0.0.1=localhost \
   --trust-keys-from-https \
   $RKT_RUN_ARGS \
   --stage1-from-dir=stage1-fly.aci \
