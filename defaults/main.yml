@@ -10,6 +10,7 @@ dns_server: "{{ kubernetes_service_addresses|ipaddr('net')|ipaddr(100)|ipaddr('a
 kubelet_extra_rkt_run_args: ""
 
 default_kubelet_options:
+  feature_gates: "PodPriority=true"
   image_gc_high_threshold: 90
   image_gc_low_threshold: 80
   minimum_image_ttl_duration: "60m"
