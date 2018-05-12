@@ -1,6 +1,8 @@
 [Unit]
 Description=Kubelet Service
 Documentation=https://github.com/kubernetes/kubernetes
+Wants=docker.service
+After=docker.service
 
 [Service]
 EnvironmentFile=-/etc/environment
