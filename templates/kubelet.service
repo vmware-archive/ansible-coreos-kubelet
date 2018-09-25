@@ -3,6 +3,8 @@ Description=Kubelet Service
 Documentation=https://github.com/kubernetes/kubernetes
 Wants=docker.service
 After=docker.service
+StartLimitIntervalSec=600
+StartLimitBurst=10
 
 [Service]
 EnvironmentFile=-/etc/environment
