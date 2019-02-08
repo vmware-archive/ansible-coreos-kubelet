@@ -9,11 +9,8 @@ StartLimitBurst=10
 [Service]
 EnvironmentFile=-/etc/environment
 ExecStart={{coreos_kubelet_install_dir}}/kubelet-wrapper \
-  --allow-privileged=true \
-  --pod-manifest-path=/etc/kubernetes/manifests \
+  --config={{etc_kubernetes}}/kubelet-config.yaml \
   --hostname-override={{ansible_default_ipv4.address}} \
-  --cluster-dns={{dns_server}} \
-  --cluster-domain=cluster.local \
   --volume-plugin-dir=/etc/kubernetes/volumeplugins \
   --register-node=true \
 {% if inventory_hostname in groups['kubernetes-masters'] %}

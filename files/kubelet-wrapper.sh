@@ -12,7 +12,7 @@ if [ -z "${KUBELET_IMAGE_TAG}" ]; then
     exit 1
 fi
 
-KUBELET_IMAGE_URL="${KUBELET_IMAGE_URL:-quay.io/coreos/hyperkube}"
+KUBELET_IMAGE_URL="${KUBELET_IMAGE_URL:-gcr.io/google-containers/hyperkube}"
 
 mkdir --parents /etc/kubernetes
 mkdir --parents /var/lib/docker

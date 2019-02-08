@@ -1,20 +1,16 @@
 ---
 # defaults file for ansible-coreos-kubelet
 coreos_kubelet_systemd: /etc/systemd/system
+etc_kubernetes: /etc/kubernetes
 coreos_kubelet_install_dir: /opt/bin
-kubelet_version: "v1.7.0_coreos.0"
-kubelet_aci: "quay.io/coreos/hyperkube"
+kubelet_image_tag: "v1.13.0"
+kubelet_image_url: "docker://gcr.io/google-containers/hyperkube"
 kubernetes_service_addresses: "172.21.0.0/16"
 dns_server: "{{ kubernetes_service_addresses|ipaddr('net')|ipaddr(100)|ipaddr('address') }}"
 
 kubelet_extra_rkt_run_args: ""
 
-default_kubelet_options:
-  feature_gates: "PodPriority=true"
-  image_gc_high_threshold: 90
-  image_gc_low_threshold: 80
-  minimum_image_ttl_duration: "60m"
-  cadvisor_port: 0
+default_kubelet_options: {}
 
 custom_kubelet_options: {}
 
