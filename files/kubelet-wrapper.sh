@@ -2,7 +2,7 @@
 # Wrapper for launching kubelet via rkt-fly stage1. 
 #
 # Make sure to set KUBELET_IMAGE_TAG to an image tag published here:
-# https://quay.io/repository/coreos/hyperkube?tab=tags Alternatively,
+# https://gcr.io/google-containers/hyperkube Alternatively,
 # override $KUBELET_IMAGE_URL to a custom location.
 
 set -e
