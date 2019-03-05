@@ -17,8 +17,6 @@ ExecStart={{coreos_kubelet_install_dir}}/kubelet-wrapper \
   --kubeconfig=/etc/kubernetes/apiserver-kubeconfig.yaml \
 {% else %}
   --kubeconfig=/etc/kubernetes/worker-kubeconfig.yaml \
-  --tls-cert-file=/etc/kubernetes/ssl/worker.pem \
-  --tls-private-key-file=/etc/kubernetes/ssl/worker-key.pem \
 {% endif %}
 {% if kube_enable_cloud_provider %}
   --cloud-provider={{kube_cloud_provider}} \

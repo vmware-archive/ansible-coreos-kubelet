@@ -102,6 +102,9 @@ streamingConnectionIdleTimeout: 4h0m0s
 syncFrequency: 1m0s
 systemCgroups: ''
 systemReserved: 
-tlsCertFile: ''
-tlsPrivateKeyFile: ''
+
+{% if inventory_hostname not in groups['kubernetes-masters'] %}
+tlsCertFile: '/etc/kubernetes/ssl/worker.pem'
+tlsPrivateKeyFile: '/etc/kubernetes/ssl/worker-key.pem'
+{% endif %}
 volumeStatsAggPeriod: 1m0s
