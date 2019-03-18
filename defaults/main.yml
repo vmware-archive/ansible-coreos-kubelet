@@ -3,8 +3,11 @@
 coreos_kubelet_systemd: /etc/systemd/system
 etc_kubernetes: /etc/kubernetes
 coreos_kubelet_install_dir: /opt/bin
+
+gcr_repo: "gcr.io/google_containers"
 kubelet_image_tag: "v1.13.4"
 kubelet_image_url: "docker://{{gcr_repo}}/hyperkube"
+
 kubernetes_service_addresses: "172.21.0.0/16"
 dns_server: "{{ kubernetes_service_addresses|ipaddr('net')|ipaddr(100)|ipaddr('address') }}"
 
