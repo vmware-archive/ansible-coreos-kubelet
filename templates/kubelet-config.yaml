@@ -39,18 +39,19 @@ enforceNodeAllocatable:
 - pods
 eventBurst: 10
 eventRecordQPS: 5
+## Eviction options
 evictionHard:
-  imagefs.available: 5%
-  memory.available: 500Mi
-  nodefs.available: 5%
-  nodefs.inodesFree: '5'
-evictionMaxPodGracePeriod: 0
+  imagefs.available: {{evictionHard_imagefs_available}}
+  memory.available: {{evictionHard_memory_available}}
+  nodefs.available: {{evictionHard_nodefs_available}}
+  nodefs.inodesFree: {{evictionHard_nodefs_inodesFree}}
+evictionMaxPodGracePeriod: {{evictionMaxPodGracePeriod}}
 evictionMinimumReclaim:
-  imagefs.available: 10%
-  memory.available: 1Gi
-  nodefs.available: 10%
-  nodefs.inodesFree: '10'
-evictionPressureTransitionPeriod: 5m0s
+  imagefs.available: {{evictionMinimumReclaim_imagefs_available}}
+  memory.available: {{evictionMinimumReclaim_memory_available}}
+  nodefs.available: {{evictionMinimumReclaim_nodefs_available}}
+  nodefs.inodesFree: {{evictionMinimumReclaim_nodefs_inodesFree}}
+evictionPressureTransitionPeriod: {{evictionPressureTransitionPeriod}}
 evictionSoft: 
 evictionSoftGracePeriod: 
 failSwapOn: true
@@ -70,10 +71,10 @@ hostPIDSources:
 - "*"
 httpCheckFrequency: 20s
 ##
-imageGCHighThresholdPercent: 85
-imageGCLowThresholdPercent: 80
+imageGCHighThresholdPercent: {{imageGCHighThresholdPercent}}
+imageGCLowThresholdPercent: {{imageGCLowThresholdPercent}}
 # .
-imageMinimumGCAge: 2h0m0s
+imageMinimumGCAge: {{imageMinimumGCAge}}
 iptablesDropBit: 15
 iptablesMasqueradeBit: 14
 kubeAPIBurst: 10
@@ -83,6 +84,7 @@ kubeReserved:
 makeIPTablesUtilChains: true
 maxOpenFiles: 1000000
 maxPods: 50
+nodeStatusReportFrequency: 1m0s
 nodeStatusUpdateFrequency: 10s
 oomScoreAdj: -999
 podCIDR: ''

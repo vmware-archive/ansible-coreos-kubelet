@@ -11,6 +11,7 @@
 - name: Copy kubelet config
   become: yes
   template: src=kubelet-config.yaml dest={{etc_kubernetes}}/kubelet-config.yaml mode=0755
+  notify: reload systemd
 
 - name: Copy kubelet-wrapper.sh
   become: yes

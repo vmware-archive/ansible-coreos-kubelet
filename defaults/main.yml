@@ -16,6 +16,26 @@ kubelet_extra_rkt_run_args: ""
 default_kubelet_options: {}
 
 custom_kubelet_options: {}
+## KUBELET options
+#evictionHard:
+evictionHard_imagefs_available: 5%
+evictionHard_memory_available: 500Mi
+evictionHard_nodefs_available: 5%
+evictionHard_nodefs_inodesFree: '5'
+#evictionMinimumReclaim:
+evictionMinimumReclaim_imagefs_available: 10%
+evictionMinimumReclaim_memory_available: 1Gi
+evictionMinimumReclaim_nodefs_available: 10%
+evictionMinimumReclaim_nodefs_inodesFree: '10'
+
+evictionMaxPodGracePeriod: 0
+evictionPressureTransitionPeriod: 5m0s
+##
+imageGCHighThresholdPercent: 85
+imageGCLowThresholdPercent: 80
+# .
+imageMinimumGCAge: 2h0m0s
+
 
 kubelet_options: "{{ default_kubelet_options | combine(custom_kubelet_options) }}"
 kube_cloud_provider: "vsphere"
