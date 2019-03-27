@@ -4,12 +4,12 @@ Documentation=https://github.com/kubernetes/kubernetes
 Wants=docker.service
 After=docker.service
 StartLimitIntervalSec=600
-StartLimitBurst=10
+StartLimitBurst=20
 
 [Service]
 EnvironmentFile=-/etc/environment
 ExecStart={{coreos_kubelet_install_dir}}/kubelet-wrapper \
-  --config={{etc_kubernetes}}/kubelet-config.yaml \
+  --config={{var_lib_kubelet}}/config.yaml \
   --hostname-override={{ansible_default_ipv4.address}} \
   --volume-plugin-dir=/etc/kubernetes/volumeplugins \
   --register-node=true \

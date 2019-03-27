@@ -3,6 +3,7 @@
 coreos_kubelet_systemd: /etc/systemd/system
 etc_kubernetes: /etc/kubernetes
 coreos_kubelet_install_dir: /opt/bin
+var_lib_kubelet: /var/lib/kubelet
 
 gcr_repo: "gcr.io/google_containers"
 kubelet_image_tag: "v1.13.4"
