@@ -18,6 +18,8 @@ default_kubelet_options: {}
 
 custom_kubelet_options: {}
 ## KUBELET options
+# Default number of pods per Node
+max_pods: 50
 #evictionHard:
 evictionHard_imagefs_available: 5%
 evictionHard_memory_available: 500Mi
