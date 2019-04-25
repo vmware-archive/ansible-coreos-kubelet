@@ -24,10 +24,10 @@ ExecStart={{coreos_kubelet_install_dir}}/kubelet-wrapper \
   --tls-private-key-file=/etc/kubernetes/ssl/worker-key.pem \
 {% endif %}
 {% if kube_enable_cloud_provider %}
-  --cloud-provider={{kube_cloud_provider}}
+  --cloud-provider={{kube_cloud_provider}} \
 {% endif %}
 {% if kubelet_options is defined %}
-{% for key, value in kubelet_options.iteritems() %}
+{% for key, value in kubelet_options.items() %}
   --{{key | lower | replace("_", "-") }}={{value}} \
 {% endfor %}
 {% endif %}
