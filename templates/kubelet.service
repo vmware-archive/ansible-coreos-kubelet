@@ -7,9 +7,10 @@ StartLimitIntervalSec=600
 StartLimitBurst=20
 
 [Service]
+Restart=always
+RestartSec=10
 EnvironmentFile=-/etc/environment
 ExecStart={{coreos_kubelet_install_dir}}/kubelet-wrapper \
-  --config={{var_lib_kubelet}}/config.yaml \
   --hostname-override={{ansible_default_ipv4.address}} \
   --volume-plugin-dir=/etc/kubernetes/volumeplugins \
   --register-node=true \
@@ -26,9 +27,7 @@ ExecStart={{coreos_kubelet_install_dir}}/kubelet-wrapper \
   --{{key | lower | replace("_", "-") }}={{value}} \
 {% endfor %}
 {% endif %}
-
-Restart=always
-RestartSec=10
+  --config={{var_lib_kubelet}}/config.yaml
 
 [Install]
 WantedBy=multi-user.target
