@@ -1,4 +1,8 @@
 #!/bin/bash
+#
+# Copyright 2015 VMware, Inc.  All rights reserved.
+# SPDX-License-Identifier: MIT OR GPL-3.0-only
+#
 
 BUILTIN_WRAPPER=/usr/lib/coreos/kubelet-wrapper
 CUSTOM_WRAPPER={{coreos_kubelet_install_dir}}/kubelet-wrapper.sh

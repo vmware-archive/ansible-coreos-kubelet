@@ -1,4 +1,8 @@
 #!/bin/bash
+#
+# Copyright 2015 VMware, Inc.  All rights reserved.
+# SPDX-License-Identifier: MIT OR GPL-3.0-only
+#
 # Wrapper for launching kubelet via rkt-fly stage1. 
 #
 # Make sure to set KUBELET_IMAGE_TAG to an image tag published here:
