@@ -6,7 +6,7 @@
 # Wrapper for launching kubelet via rkt-fly stage1. 
 #
 # Make sure to set KUBELET_IMAGE_TAG to an image tag published here:
-# https://quay.io/repository/coreos/hyperkube?tab=tags Alternatively,
+# https://gcr.io/google_containers/hyperkube Alternatively,
 # override $KUBELET_IMAGE_URL to a custom location.
 
 set -e
@@ -16,7 +16,7 @@ if [ -z "${KUBELET_IMAGE_TAG}" ]; then
     exit 1
 fi
 
-KUBELET_IMAGE_URL="${KUBELET_IMAGE_URL:-quay.io/coreos/hyperkube}"
+KUBELET_IMAGE_URL="${KUBELET_IMAGE_URL:-gcr.io/google_containers/hyperkube}"
 
 mkdir --parents /etc/kubernetes
 mkdir --parents /var/lib/docker

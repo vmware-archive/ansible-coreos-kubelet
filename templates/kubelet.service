@@ -4,24 +4,20 @@ Documentation=https://github.com/kubernetes/kubernetes
 Wants=docker.service
 After=docker.service
 StartLimitIntervalSec=600
-StartLimitBurst=10
+StartLimitBurst=20
 
 [Service]
+Restart=always
+RestartSec=10
 EnvironmentFile=-/etc/environment
 ExecStart={{coreos_kubelet_install_dir}}/kubelet-wrapper \
-  --allow-privileged=true \
-  --pod-manifest-path=/etc/kubernetes/manifests \
   --hostname-override={{ansible_default_ipv4.address}} \
-  --cluster-dns={{dns_server}} \
-  --cluster-domain=cluster.local \
   --volume-plugin-dir=/etc/kubernetes/volumeplugins \
   --register-node=true \
 {% if inventory_hostname in groups['kubernetes-masters'] %}
   --kubeconfig=/etc/kubernetes/apiserver-kubeconfig.yaml \
 {% else %}
   --kubeconfig=/etc/kubernetes/worker-kubeconfig.yaml \
-  --tls-cert-file=/etc/kubernetes/ssl/worker.pem \
-  --tls-private-key-file=/etc/kubernetes/ssl/worker-key.pem \
 {% endif %}
 {% if kube_enable_cloud_provider %}
   --cloud-provider={{kube_cloud_provider}} \
@@ -31,9 +27,7 @@ ExecStart={{coreos_kubelet_install_dir}}/kubelet-wrapper \
   --{{key | lower | replace("_", "-") }}={{value}} \
 {% endfor %}
 {% endif %}
-
-Restart=always
-RestartSec=10
+  --config={{kubelet_config_dir}}/config.yaml
 
 [Install]
 WantedBy=multi-user.target
