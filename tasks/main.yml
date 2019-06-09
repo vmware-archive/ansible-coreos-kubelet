@@ -6,6 +6,15 @@
   become: yes
   file: path={{coreos_kubelet_install_dir}} state=directory mode=0755
 
+- name: Create kubelet config dir
+  become: yes
+  file: path={{kubelet_config_dir}} state=directory mode=0755
+
+- name: Copy kubelet config
+  become: yes
+  template: src={{kubelet_config_file_src}} dest={{kubelet_config_dir}}/config.yaml mode=0755
+  notify: restart kubelet
+
 - name: Copy kubelet-wrapper.sh
   become: yes
   copy: src=kubelet-wrapper.sh dest={{coreos_kubelet_install_dir}}/kubelet-wrapper.sh mode=0755
