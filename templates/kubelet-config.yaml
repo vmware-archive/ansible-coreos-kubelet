@@ -1,0 +1,105 @@
+---
+kind: KubeletConfiguration
+apiVersion: kubelet.config.k8s.io/v1beta1
+address: 0.0.0.0
+allowPrivileged: true
+authentication:
+  anonymous:
+    enabled: true
+  webhook:
+    cacheTTL: 2m0s
+    enabled: false
+  x509:
+    clientCAFile: ''
+authorization:
+  mode: AlwaysAllow
+  webhook:
+    cacheAuthorizedTTL: 5m0s
+    cacheUnauthorizedTTL: 30s
+cAdvisorPort: 4194
+cgroupDriver: cgroupfs
+cgroupRoot: ''
+cgroupsPerQOS: true
+clusterDNS:
+- {{dns_server}}
+
+clusterDomain: cluster.local
+configTrialDuration: 10m0s
+contentType: application/vnd.kubernetes.protobuf
+cpuCFSQuota: true
+cpuManagerPolicy: none
+cpuManagerReconcilePeriod: 10s
+enableContentionProfiling: false
+enableControllerAttachDetach: true
+enableDebuggingHandlers: true
+enableServer: true
+enforceNodeAllocatable:
+- pods
+eventBurst: 10
+eventRecordQPS: 5
+## Eviction options
+evictionHard:
+  imagefs.available: 5%
+  memory.available: 500Mi
+  nodefs.available: 5%
+  nodefs.inodesFree: '5'
+evictionMaxPodGracePeriod: 0
+evictionMinimumReclaim:
+  imagefs.available: 10%
+  memory.available: 1Gi
+  nodefs.available: 10%
+  nodefs.inodesFree: '10'
+evictionPressureTransitionPeriod: 5m0s
+evictionSoft:
+evictionSoftGracePeriod:
+failSwapOn: true
+featureGates:
+  PodPriority: true
+fileCheckFrequency: 20s
+hairpinMode: promiscuous-bridge
+healthzBindAddress: 127.0.0.1
+healthzPort: 10248
+hostIPCSources:
+- "*"
+hostNetworkSources:
+- "*"
+hostPIDSources:
+- "*"
+httpCheckFrequency: 20s
+imageGCHighThresholdPercent: 85
+imageGCLowThresholdPercent: 80
+imageMinimumGCAge: 2h0m0s
+iptablesDropBit: 15
+iptablesMasqueradeBit: 14
+kubeAPIBurst: 10
+kubeAPIQPS: 5
+kubeletCgroups: ''
+kubeReserved:
+makeIPTablesUtilChains: true
+maxOpenFiles: 1000000
+maxPods: 50
+nodeStatusReportFrequency: 1m0s
+nodeStatusUpdateFrequency: 10s
+oomScoreAdj: -999
+podCIDR: ''
+staticPodPath: "/etc/kubernetes/manifests"
+
+podsPerCore: 0
+port: 10250
+protectKernelDefaults: false
+readOnlyPort: 10255
+registryBurst: 10
+registryPullQPS: 5
+resolvConf: "/etc/resolv.conf"
+runtimeRequestTimeout: 2m0s
+serializeImagePulls: true
+streamingConnectionIdleTimeout: 4h0m0s
+syncFrequency: 1m0s
+systemCgroups: ''
+systemReserved:
+
+{% if inventory_hostname not in groups['kubernetes-masters'] %}
+tlsCertFile: '/etc/kubernetes/ssl/worker.pem'
+tlsPrivateKeyFile: '/etc/kubernetes/ssl/worker-key.pem'
+{% endif %}
+volumeStatsAggPeriod: 1m0s

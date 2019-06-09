@@ -4,22 +4,23 @@
 # defaults file for ansible-coreos-kubelet
 coreos_kubelet_systemd: /etc/systemd/system
 coreos_kubelet_install_dir: /opt/bin
-kubelet_version: "v1.7.0_coreos.0"
-kubelet_aci: "quay.io/coreos/hyperkube"
+
+kubelet_image_tag: "v1.14.3"
+kubelet_image_url: "docker://gcr.io/google_containers/hyperkube"
+
 kubernetes_service_addresses: "172.21.0.0/16"
 dns_server: "{{ kubernetes_service_addresses|ipaddr('net')|ipaddr(100)|ipaddr('address') }}"
 
 kubelet_extra_rkt_run_args: ""
 
-default_kubelet_options:
-  feature_gates: "PodPriority=true"
-  image_gc_high_threshold: 90
-  image_gc_low_threshold: 80
-  minimum_image_ttl_duration: "60m"
-  cadvisor_port: 0
+## KUBELET options set via kubelet config file
+kubelet_config_file_name: "kubelet-config.yaml"
+kubelet_config_file_src: "{{kubelet_config_file_name}}"
+kubelet_config_dir: "/var/lib/kubelet"
 
+## KUBELET options set via commandline. These override the options in kubelet config file
+default_kubelet_options: {}
 custom_kubelet_options: {}
-
 kubelet_options: "{{ default_kubelet_options | combine(custom_kubelet_options) }}"
 kube_cloud_provider: "vsphere"
 kube_enable_cloud_provider: False
