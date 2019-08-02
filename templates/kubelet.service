@@ -3,8 +3,8 @@ Description=Kubelet Service
 Documentation=https://github.com/kubernetes/kubernetes
 Wants=docker.service
 After=docker.service
-StartLimitIntervalSec=600
-StartLimitBurst=10
+StartLimitIntervalSec=60
+StartLimitBurst=3
 
 [Service]
 EnvironmentFile=-/etc/environment
@@ -33,7 +33,7 @@ ExecStart={{coreos_kubelet_install_dir}}/kubelet-wrapper \
 {% endif %}
 
 Restart=always
-RestartSec=10
+RestartSec=15
 
 [Install]
 WantedBy=multi-user.target
