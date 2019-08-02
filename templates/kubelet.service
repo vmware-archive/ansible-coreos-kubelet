@@ -3,12 +3,12 @@ Description=Kubelet Service
 Documentation=https://github.com/kubernetes/kubernetes
 Wants=docker.service
 After=docker.service
-StartLimitIntervalSec=600
-StartLimitBurst=20
+StartLimitIntervalSec=60
+StartLimitBurst=3
 
 [Service]
 Restart=always
-RestartSec=10
+RestartSec=15
 EnvironmentFile=-/etc/environment
 ExecStart={{coreos_kubelet_install_dir}}/kubelet-wrapper \
   --hostname-override={{ansible_default_ipv4.address}} \
