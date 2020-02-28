@@ -14,6 +14,9 @@ ExecStart={{coreos_kubelet_install_dir}}/kubelet-wrapper \
   --hostname-override={{ansible_default_ipv4.address}} \
   --volume-plugin-dir=/etc/kubernetes/volumeplugins \
   --register-node=true \
+{% if kubernetes_enable_cni %}
+  --network-plugin=cni \
+{% endif %}
 {% if inventory_hostname in groups['kubernetes-masters'] %}
   --kubeconfig=/etc/kubernetes/apiserver-kubeconfig.yaml \
 {% else %}

@@ -9,6 +9,7 @@ kubelet_image_tag: "v1.14.3"
 kubelet_image_url: "docker://gcr.io/google_containers/hyperkube"
 
 kubernetes_service_addresses: "172.21.0.0/16"
+kubernetes_enable_cni: False
 dns_server: "{{ kubernetes_service_addresses|ipaddr('net')|ipaddr(100)|ipaddr('address') }}"
 
 kubelet_extra_rkt_run_args: ""

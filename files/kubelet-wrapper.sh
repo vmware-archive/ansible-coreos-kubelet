@@ -23,15 +23,21 @@ mkdir --parents /var/lib/docker
 mkdir --parents /var/lib/kubelet
 mkdir --parents /run/kubelet
 mkdir --parents /var/log/containers
+mkdir --parents /etc/cni
+mkdir --parents /opt/cni
 
 exec /usr/bin/rkt run \
   --volume etc-kubernetes,kind=host,source=/etc/kubernetes \
+  --volume etc-cni,kind=host,source=/etc/cni \
+  --volume opt-cni,kind=host,source=/opt/cni \
   --volume etc-ssl-certs,kind=host,source=/usr/share/ca-certificates \
   --volume var-lib-docker,kind=host,source=/var/lib/docker \
   --volume var-lib-kubelet,kind=host,source=/var/lib/kubelet,readOnly=false,recursive=true \
   --volume var-log,kind=host,source=/var/log,readOnly=false \
   --volume run,kind=host,source=/run \
   --mount volume=etc-kubernetes,target=/etc/kubernetes \
+  --mount volume=etc-cni,target=/etc/cni \
+  --mount volume=opt-cni,target=/opt/cni \
   --mount volume=etc-ssl-certs,target=/etc/ssl/certs \
   --mount volume=var-lib-docker,target=/var/lib/docker \
   --mount volume=var-lib-kubelet,target=/var/lib/kubelet \
