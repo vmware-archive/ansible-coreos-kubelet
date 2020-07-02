@@ -40,3 +40,15 @@
 - name: Start kubelet
   become: yes
   service: name=kubelet.service state=started enabled=yes
+
+- name: make fstab directory for cifs plugin
+  become: yes
+  file:
+    path: "{{kubelet_volume_plugin_dir}}/fstab~cifs"
+    state: directory
+  when: kubelet_enable_cifs_mount
+
+- name: install cifs plugin
+  copy: src=cifs dest="{{kubelet_volume_plugin_dir}}/fstab~cifs/cifs" mode=0755
+  become: true
+  when: kubelet_enable_cifs_mount
