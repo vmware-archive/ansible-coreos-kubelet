@@ -18,6 +18,8 @@ kubelet_extra_rkt_run_args: ""
 kubelet_config_file_name: "kubelet-config.yaml"
 kubelet_config_file_src: "{{kubelet_config_file_name}}"
 kubelet_config_dir: "/var/lib/kubelet"
+kubelet_volume_plugin_dir: "/etc/kubernetes/volumeplugins"
+kubelet_enable_cifs_mount: False
 
 ## KUBELET options set via commandline. These override the options in kubelet config file
 default_kubelet_options: {}
