@@ -10,7 +10,10 @@ kubelet_image_url: "docker://gcr.io/google_containers/hyperkube"
 
 kubernetes_service_addresses: "172.21.0.0/16"
 kubernetes_enable_cni: False
-dns_server: "{{ kubernetes_service_addresses|ipaddr('net')|ipaddr(100)|ipaddr('address') }}"
+# DECC-3830: clusterDNS IP is 172.21.0.100 for normal coreDNS, 172.21.0.101
+# for BCP coreDNS.  The decc_vmware_isolate labels below are for disaster
+# recovery nodes in the DR bubble.
+dns_server: "{{kubernetes_service_addresses|ipaddr('net')|ipaddr(101)|ipaddr('address') if (('decc_vmware_isolate' in hostvars[inventory_hostname]) and (hostvars[inventory_hostname]['decc_vmware_isolate'] in ('decc3385-367c7de7ce3c4112bb6bede85cdb9d29', 'decc3385-4053c0aecab94aa0ac2a2b0ef9a83947', 'decc3399-ed33a990230b44b7bdae3d70c7e467f2'))) else kubernetes_service_addresses|ipaddr('net')|ipaddr(100)|ipaddr('address')}}"
 
 kubelet_extra_rkt_run_args: ""
 
