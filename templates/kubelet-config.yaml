@@ -5,14 +5,14 @@ address: 0.0.0.0
 allowPrivileged: true
 authentication:
   anonymous:
-    enabled: true
+    enabled: false
   webhook:
     cacheTTL: 2m0s
-    enabled: false
+    enabled: true
   x509:
-    clientCAFile: ''
+    clientCAFile: '/etc/kubernetes/ssl/ca.pem'
 authorization:
-  mode: AlwaysAllow
+  mode: Webhook
   webhook:
     cacheAuthorizedTTL: 5m0s
     cacheUnauthorizedTTL: 30s
